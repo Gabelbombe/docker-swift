@@ -50,16 +50,16 @@ RUN SWIFT_URL=https://swift.org/builds/$SWIFT_BRANCH/$(echo "$SWIFT_PLATFORM"   
       #       Key fingerprint = A3BA FD35 56A5 9079 C068  94BD 63BC 1CFE 91D3 06C6
       # uid                  Swift 3.x Release Signing Key <swift-infrastructure@swift.org>
           A3BAFD3556A59079C06894BD63BC1CFE91D306C6                                              \
-        ; do \
-          gpg --quiet --keyserver ha.pool.sks-keyservers.net --recv-keys "$key";                \
-        done \
+        ; do                                                                                    \
+          gpg --quiet --keyserver ha.pool.sks-keyservers.net --recv-keys "$key" ;               \
+        done                                                                                    \
     && gpg --batch --verify --quiet swift.tar.gz.sig swift.tar.gz                               \
     && tar -xzf swift.tar.gz --directory / --strip-components=1                                 \
     && rm -r "$GNUPGHOME" swift.tar.gz.sig swift.tar.gz                                         \
     && chmod -R o+r /usr/lib/swift
 
 # Post cleanup for binaries orthogonal to swift runtime, but was used to download and install.
-RUN apt-get -y remove --purge                                                                  \
+RUN apt-get -y remove --purge                                                                   \
     python2.7
 
 # Post cleanup for binaries orthogonal to swift runtime, but was used to download and install.
